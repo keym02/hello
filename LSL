@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lyceum Southern Luzon Inc.</title>
+  <style>
+    /* Reset & base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background: #fff;
+      color: #222;
+      scroll-behavior: smooth;
+    }
+    a {
+      color: #004aad; /* Blue */
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #f2c94c; /* Yellow */
+    }
+    header {
+      background: linear-gradient(90deg, #004aad, #f2c94c); /* Blue to yellow */
+      color: white;
+      padding: 1.2rem 2rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .logo {
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      color: white;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    nav ul li {
+      margin-left: 2rem;
+    }
+    nav ul li a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.3rem;
+      color: white;
+    }
+    nav ul li a:hover {
+      color: #f2c94c; /* Yellow */
+    }
+    /* Mobile nav toggle */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      border-radius: 3px;
+    }
+
+    /* Sections */
+    section {
+      padding: 4rem 1rem;
+      background: white;
+      min-height: 80vh;
+      scroll-margin-top: 80px;
+    }
+    section:nth-of-type(even) {
+      background: #f9f9f9;
+    }
+    section h2 {
+      text-align: center;
+      color: #004aad; /* Blue */
+      font-size: 2.4rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+    .about-content, .programs-content, .admission-content, .contact-content, .home-content {
+      max-width: 900px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: #333;
+    }
+
+    /* Home Hero */
+    #home {
+      background: url('https://images.unsplash.com/photo-1550514145-16b498be845e?auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+      color: white;
+      padding-top: 80px;
+      padding-bottom: 80px;
+      text-align: center;
+      position: relative;
+    }
+    #home::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 74, 173, 0.7); /* Blue overlay */
+      z-index: 0;
+    }
+    #home .home-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 3rem 1rem;
+    }
+    #home h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
+    #home p {
+      font-size: 1.3rem;
+      margin-bottom: 2rem;
+      font-weight: 400;
+      text-shadow: 0 0 10px rgba(0,0,0,0.6);
+    }
+    #home a.button {
+      background-color: #f2c94c; /* Yellow */
+      color: #222;
+      padding: 0.8rem 2rem;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 5px 15px rgba(242, 201, 76, 0.5);
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+    }
+    #home a.button:hover {
+      background-color: #d1a92a;
+    }
+
+    /* Program list grid */
+    .program-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1.5rem;
+    }
+    .program-item {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      cursor: default;
+      border: 2px solid #004aad;
+    }
+    .program-item:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+      border-color: #f2c94c;
+    }
+    .program-item h3 {
+      color: #004aad;
+      margin-bottom: 0.7rem;
+    }
+
+    /* Contact form */
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      transition: border-color 0.3s ease;
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+      border-color: #f2c94c; /* Yellow */
+      outline: none;
+    }
+    button[type="submit"] {
+      background-color: #004aad; /* Blue */
+      color: white;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      font-size: 1.1rem;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background-color 0.3s ease;
+    }
+    button[type="submit"]:hover {
+      background-color: #02397a;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #004aad; /* Blue */
+      color: white;
+      text-align: center;
+      padding: 1rem 1rem;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    /* Back to Top button */
+    #backToTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 1001;
+      background-color: #f2c94c; /* Yellow */
+      color: #004aad;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(242, 201, 76, 0.5);
+      transition: background-color 0.3s ease;
+    }
+    #backToTopBtn:hover {
+      background-color: #d1a92a;
+    }
+
+    /* Responsive Nav */
+    @media (max-width: 768px) {
+      nav ul {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background-color: #004aad; /* Blue */
+        flex-direction: column;
+        display: none;
+        padding: 1rem 0;
+      }
+      nav ul.active {
+        display: flex;
+      }
+      nav ul li {
+        margin: 1rem 0;
+        text-align: center;
+      }
+      .menu-toggle {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+        <img src="logo.png" alt="Image description" style="width: 100px;height: 100px;" title="this is the title of the Image">
+      <div class="logo" aria-label="School logo">Lyceum Southern Luzon Inc.</div>
+      <div class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu" role="button" tabindex="0">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <ul id="nav-list" role="navigation">
+        <li><a href="#home" tabindex="0">Home</a></li>
+        <li><a href="#about" tabindex="0">About</a></li>
+        <li><a href="#programs" tabindex="0">Programs</a></li>
+        <li><a href="#admission" tabindex="0">Admission</a></li>
+        <li><a href="#contact" tabindex="0">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section id="home" role="banner" aria-label="Welcome to Lyceum Southern Luzon Inc.">
+  <div class="home-content">
+    <h2>Welcome to</h3>
+    <h1>Lyceum of Southern Luzon Inc.</h1>
+    <h3>Balayan Campus</h3>
+    <p>Empowering future leaders through quality education and innovation.</p>
+    <a href="#about" class="button" role="button">Learn More</a>
+  </div>
+</section>
+
+<section id="about" aria-labelledby="about-heading" tabindex="0">
+  <h2 id="about-heading">About Us</h2>
+  <div class="about-content">
+    <p>Lyceum Southern Luzon Inc. is a premier institution committed to academic excellence and holistic student development. Established to serve Southern Luzon, we offer a vibrant learning environment with modern facilities, experienced faculty, and a vision to shape future leaders and innovators.</p>
+  </div>
+</section>
+
+<section id="programs" aria-labelledby="programs-heading" tabindex="0">
+  <h2 id="programs-heading">Our Programs</h2>
+  <div class="programs-content">
+    <div class="program-list" role="list">
+      <div class="program-item" role="listitem">
+        <h3>Bachelor of Science in Information Systems</h3>
+        <p>A Bachelor of Science in Information Systems (BSIS) is a degree program that focuses on the design, development, implementation, and management of computer-based systems and technology.</p>
+      </div>
+      <div class="program-item" role="listitem">
+        <h3>Bachelor of Science in Management Accounting</h3>
+        <p>A Bachelor of Science in Management Accounting is a degree program that focuses on the application of accounting principles and practices to support business decision-making.</p>
+      </div>
+      <div class="program-item" role="listitem">
+        <h3>Bachelor of Science in Customs Admintration</h3>
+        <p>A Bachelor of Science in Customs Administration is a degree program that focuses on the study of customs procedures, regulations, and policies.</p>
+      </div>
+       <div class="program-item" role="listitem">
+        <h3>Bachelor of Science in Crimanology (New)</h3>
+        <p>A Bachelor of Science in Criminology is a degree program that focuses on the study of crime, criminal behavior, and the criminal justice system.</p>
+      </div>
+      <div class="program-item" role="listitem">
+        <h3>Senior High School (Academic & Technical-Vocational Tracks)</h3>
+        <p>Prepare for college or employment with flexible academic and skills-based tracks.</p>
+      </div>
+      <div class="program-item" role="listitem">
+        <h3>Junior High School (Grade7 & Grade10)</h3>
+        <p>Junior High School typically refers to the educational level between elementary school and high school, encompassing Grades 7 to 10.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="admission" aria-labelledby="admission-heading" tabindex="0">
+  <h2 id="admission-heading">Admission</h2>
+  <div class="admission-content">
+    <p>Join the Lyceum Southern Luzon Inc. family! Admission is open for all qualified students who aspire to excel and grow in a supportive academic environment.</p>
+    <h3>Requirements:</h3>
+    <ul>
+      <li>Completed application form (available at the school or online)</li>
+      <li>Certified true copy of high school diploma or transcript of records</li>
+      <li>Birth certificate (NSO/PSA authenticated)</li>
+      <li>2x2 ID photos</li>
+      <li>Entrance examination or interview (schedule to be announced)</li>
+    </ul>
+    <p>For inquiries about admission schedules and procedures, please contact our Admissions Office.</p>
+  </div>
+</section>
+
+<section id="contact" class="contact-info" aria-labelledby="contact-heading">
+    <h3 id="contact-heading">Contact Us</h3>
+    <p>Email: lyceumsouthernluzon2018@gmail.com</p>
+    <p>Phone: 09275042221 | (043)3320390 </p>
+    <p>Address: Brgy.Lanatan (in Font of Western Batangas Medical Center), Balayan,Batangas Philippines</p>
+    <p>Follow us on social media: 
+      <a href="https://www.facebook.com/LyceumOfSouthernLuzonBalayan" target="_blank" rel="noopener">Facebook</a>
+    </p>
+    <a href="#top" class="back-to-top">Back to Top</a>
+  </section>
+
+<footer>
+  &copy; 2025 Lyceum Southern Luzon Inc. | Brgy. Lanatan (in Front of Western Batangas Medical Center), Balayan, Batangas, Philippines | Phone: (043)3320390 | 09275042221 | Email: lyceumsouthernluzon2018@gmail.com
+</footer>
+</body>
+</html>
